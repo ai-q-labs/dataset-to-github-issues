@@ -1,0 +1,19 @@
+{
+    "name": "dataset-to-github-issues",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Turns confirmed findings from an audit Actor's dataset into GitHub issues, through an Apify MCP connector. Reads the tracker before it writes, so a repeated run does not file the same finding twice, and it never files a finding the audit could not verify.",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.7.0",
+        "@modelcontextprotocol/sdk": "^1.30.0"
+    },
+    "scripts": {
+        "start": "node src/main.js",
+        "test": "node --test test/unit.test.mjs"
+    },
+    "author": "Ai-Q Labs",
+    "license": "ISC"
+}
