@@ -1,0 +1,37 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "title": "Issue decisions",
+        "type": "object",
+        "properties": {
+            "key": { "type": ["string", "null"] },
+            "decision": { "type": "string" },
+            "reason": { "type": "string" },
+            "riskLevel": { "type": ["string", "null"] },
+            "issueCodes": { "type": "array" },
+            "issueTitle": { "type": ["string", "null"] },
+            "issueNumber": { "type": ["integer", "null"] },
+            "issueUrl": { "type": ["string", "null"] },
+            "checkedAt": { "type": ["string", "null"] }
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "What happened to each finding",
+            "transformation": {
+                "fields": ["decision", "reason", "key", "riskLevel", "issueNumber", "issueUrl"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "decision": { "label": "Decision" },
+                    "reason": { "label": "Why" },
+                    "key": { "label": "Finding" },
+                    "riskLevel": { "label": "Risk" },
+                    "issueNumber": { "label": "Issue #" },
+                    "issueUrl": { "label": "Issue URL" }
+                }
+            }
+        }
+    }
+}

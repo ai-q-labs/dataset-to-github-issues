@@ -1,0 +1,82 @@
+{
+    "title": "Dataset to GitHub issues",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "datasetId": {
+            "title": "Audit dataset",
+            "type": "string",
+            "description": "The dataset produced by an audit run. Each item is expected to carry riskLevel and issueCodes; anything else is counted as unreadable rather than treated as clean. This Actor asks for read access only — it never writes back into your audit results.",
+            "editor": "resourcePicker",
+            "resourceType": "dataset",
+            "resourcePermissions": ["READ"],
+            "example": "abcDEF123456"
+        },
+        "githubConnector": {
+            "title": "GitHub connector",
+            "type": "string",
+            "description": "An MCP connector authorized against GitHub. This Actor can only read issues and open them; the proxy rejects every other tool, whatever else the connector supports.",
+            "resourceType": "mcpConnector",
+            "mcpServers": [
+                {
+                    "url": "https://api.githubcopilot.com/mcp/",
+                    "tools": {
+                        "required": [
+                            "issue_read",
+                            "issue_write",
+                            "list_issues",
+                            "search_issues"
+                        ]
+                    }
+                }
+            ]
+        },
+        "owner": {
+            "title": "Issue tracker owner",
+            "type": "string",
+            "description": "Owner of the repository the issues are filed in. This is the tracker, not the audited project.",
+            "editor": "textfield",
+            "example": "ai-q-labs"
+        },
+        "repo": {
+            "title": "Issue tracker repository",
+            "type": "string",
+            "description": "Repository the issues are filed in.",
+            "editor": "textfield",
+            "example": "github-repository-audit"
+        },
+        "minRiskLevel": {
+            "title": "File issues from this risk level up",
+            "type": "string",
+            "description": "Rows below this level are left in the dataset. A row whose only finding is not_checked is never filed at any setting, because 'could not verify' is not a defect.",
+            "editor": "select",
+            "default": "high",
+            "enum": ["critical", "high", "medium"],
+            "enumTitles": ["critical only", "high and critical", "medium and above"]
+        },
+        "maxIssues": {
+            "title": "Maximum issues to open in one run",
+            "type": "integer",
+            "description": "A ceiling on writes. Findings beyond it are reported as deferred, not dropped silently.",
+            "editor": "number",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 50
+        },
+        "dryRun": {
+            "title": "Dry run",
+            "type": "boolean",
+            "description": "Do everything except the write: read the tracker, decide what would be opened, and report it. Leave this on for the first run against a repository you care about.",
+            "editor": "checkbox",
+            "default": true
+        },
+        "labels": {
+            "title": "Labels to put on new issues",
+            "type": "array",
+            "description": "Applied only if the label already exists in the tracker; the Actor does not create labels.",
+            "editor": "stringList",
+            "default": []
+        }
+    },
+    "required": ["datasetId", "githubConnector", "owner", "repo"]
+}

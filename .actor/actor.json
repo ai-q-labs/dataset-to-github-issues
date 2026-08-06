@@ -1,0 +1,16 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "dataset-to-github-issues",
+    "title": "GitHub Issue Writer: File Audit Findings, Skip Duplicates",
+    "description": "Takes the dataset an audit Actor produced and opens a GitHub issue for each confirmed finding, through an MCP connector. It reads the tracker first, so running it again does not file the same finding twice, and it refuses to file anything the audit could not verify.",
+    "version": "0.1",
+    "meta": {
+        "generatedBy": "Claude Code with Claude Opus 5"
+    },
+    "inputSchema": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}
